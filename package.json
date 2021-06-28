@@ -17,7 +17,7 @@
     "url": "https://github.com/maximilian-krauss/env-snitch.git"
   },
   "bin": {
-    "env-snitch": "./bin/env-snitch"
+    "env-snitch": "./.bin/env-snitch"
   },
   "keywords": [],
   "author": "Maximilian Krauß",
