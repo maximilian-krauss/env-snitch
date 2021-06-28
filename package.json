@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node ./src/main.ts",
+    "start": "ts-node ./src/index.ts",
     "test": "echo 'none yet, really'",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build": "tsc -p tsconfig.json",
@@ -15,6 +15,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/maximilian-krauss/env-snitch.git"
+  },
+  "bin": {
+    "env-snitch": "./bin/env-snitch"
   },
   "keywords": [],
   "author": "Maximilian Krauß",
