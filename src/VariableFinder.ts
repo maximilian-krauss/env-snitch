@@ -1,8 +1,8 @@
 import { join } from 'path'
 import { promises } from 'fs'
 
-const _filePattern: RegExp = /.*\.(js|ts)$/i
-const _exludedFolderPattern: RegExp = /node_modules/i
+const _filePattern = /.*\.(js|ts)$/i
+const _exludedFolderPattern = /node_modules/i
 
 async function getFilesFrom(directory: string): Promise<Array<string>> {
   const entries = await promises.readdir(directory, { withFileTypes: true })

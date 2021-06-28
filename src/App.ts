@@ -23,7 +23,7 @@ export default class App {
       .filter(({ key }) => variables.includes(key))
   }
 
-  async execute() {
+  async execute(): Promise<string> {
     const variables = await findAllVariablesIn(this._options.directory)
 
     const podsResponse = await executeShellCommand([`kubectl get pods --selector=app=${this._options.applicationName} -o json`])
