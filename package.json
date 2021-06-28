@@ -16,6 +16,9 @@
     "type": "git",
     "url": "https://github.com/maximilian-krauss/env-snitch.git"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "bin": {
     "env-snitch": "./.bin/env-snitch"
   },
