@@ -1,6 +1,6 @@
 {
   "name": "env-snitch",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,12 @@
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist build",
-    "ts-node": "ts-node"
+    "ts-node": "ts-node",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maximilian-krauss/env-snitch.git"
   },
   "keywords": [],
   "author": "Maximilian Krauß",
@@ -21,8 +26,12 @@
     "@typescript-eslint/parser": "^4.25.0",
     "eslint": "^7.27.0",
     "jest": "^27.0.1",
+    "semantic-release": "^17.4.4",
     "ts-jest": "^27.0.1",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
