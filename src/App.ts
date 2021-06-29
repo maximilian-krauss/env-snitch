@@ -23,12 +23,23 @@ export default class App {
       .filter(({ key }) => variables.includes(key))
   }
 
-  async execute(): Promise<string> {
-    const variables = await findAllVariablesIn(this._options.directory)
-
+  private async getPodName(): Promise<string | undefined> {
     const podsResponse = await executeShellCommand([`kubectl get pods --selector=app=${this._options.applicationName} -o json`])
     const pods = JSON.parse(podsResponse) as GetPodResponse
     const podName = pods?.items[0]?.metadata?.name
+    return podName
+  }
+
+  async execute(): Promise<string> {
+    const variables = await findAllVariablesIn(this._options.directory)
+    if (variables.length === 0) {
+      throw new Error('Did not find any usage of environment variables inside the given directory')
+    }
+
+    const podName = await this.getPodName()
+    if (podName === undefined) {
+      throw new Error(`Did not find a pod for application ${this._options.applicationName}`)
+    }
 
     const environmentVariables = await executeShellCommand([`kubectl exec ${podName} -- printenv`])
     const merged = this.mergeVariables(variables, environmentVariables)
