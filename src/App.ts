@@ -24,7 +24,7 @@ export default class App {
   }
 
   private async getPodName(): Promise<string | undefined> {
-    const podsResponse = await executeShellCommand([`kubectl get pods --selector=app=${this._options.applicationName} -o json`])
+    const podsResponse = await executeShellCommand(`kubectl get pods --selector=app=${this._options.applicationName} -o json`)
     const pods = JSON.parse(podsResponse) as GetPodResponse
     const podName = pods?.items[0]?.metadata?.name
     return podName
@@ -41,7 +41,7 @@ export default class App {
       throw new Error(`Did not find a pod for application ${this._options.applicationName}`)
     }
 
-    const environmentVariables = await executeShellCommand([`kubectl exec ${podName} -- printenv`])
+    const environmentVariables = await executeShellCommand(`kubectl exec ${podName} -- printenv`)
     const merged = this.mergeVariables(variables, environmentVariables)
 
     return merged
