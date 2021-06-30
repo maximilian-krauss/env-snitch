@@ -8,7 +8,6 @@ async function main() {
 }
 
 main()
-  .then(console.log)
   .catch(error => {
     console.error(error)
     process.exit(1)

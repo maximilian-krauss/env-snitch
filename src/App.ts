@@ -1,7 +1,6 @@
 import { executeShellCommand } from './CommandExecuter'
 import { GetPodResponse } from './k8sInterface'
 import { findAllVariablesIn } from './VariableFinder'
-import { EOL } from 'os'
 import { ExecutionOptions } from './ExecutionOptions'
 
 export default class App {
@@ -11,7 +10,7 @@ export default class App {
     this._options = options
   }
 
-  private mergeVariables(variables: Array<string>, environment: string) {
+  private mergeVariables(variables: Array<string>, environment: string): Array<Record<string, string>> {
     return environment
       .split('\n')
       .map(item => {
@@ -30,7 +29,7 @@ export default class App {
     return podName
   }
 
-  async execute(): Promise<string> {
+  async execute(): Promise<void> {
     const variables = await findAllVariablesIn(this._options.directory)
     if (variables.length === 0) {
       throw new Error('Did not find any usage of environment variables inside the given directory')
@@ -44,9 +43,9 @@ export default class App {
     const environmentVariables = await executeShellCommand(`kubectl exec ${podName} -- printenv`)
     const merged = this.mergeVariables(variables, environmentVariables)
 
-    return merged
-      .map(({ key, value }) => `${key}=${value}`)
-      .sort()
-      .join(EOL)
+    await Promise.all(this._options
+      .outputDestinations
+      .map(destination => destination.write(merged))
+    )
   }
 }
