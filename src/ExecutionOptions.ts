@@ -6,9 +6,10 @@ import { StdOutput } from './Output/StdOutput'
 import { FileOutput } from './Output/FileOutput'
 
 export type ExecutionOptions = {
-  directory: string,
+  directory: string
   applicationName: string
   outputDestinations: Output[]
+  ignoreMissingVariables: boolean
 }
 
 async function getAppName(directory: string): Promise<string | null> {
@@ -40,9 +41,12 @@ export async function fromCommandLineArguments(args: Array<string>): Promise<Exe
     outputDestinations.push(new FileOutput(join(resolvedDirectory, fileFlag)))
   }
 
+  const ignoreMissingVariables = Object.keys(parsedFlags).includes('--ignoreMissing')
+
   return {
     outputDestinations,
+    ignoreMissingVariables,
     directory: resolvedDirectory,
-    applicationName: appName,
+    applicationName: appName
   }
 }

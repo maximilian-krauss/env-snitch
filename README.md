@@ -12,12 +12,13 @@ Little snitch (not the network one) tool to help creating .env files from k8s an
 
 `env-snitch` scans through all .js or .ts files in the given directory and searches for usages of environment variables (by accessing them via `(process).env.SOME_VARIABLE`). It then connects to k8s, looks for the pod running your application and extracts the environment variables from the pod and prints them into stdout.
 
-## Possible options
+## Available flags and options
 
 Alongside the required directory as first argument you can pass the following parameter to `env-snitch`:
 
 - **--appName** - Specifies the name of the application as it is labelled inside the kubernetes cluster. If not provided, env-snitch tries to use the `name` specified inside the `package.json`.
 - **--file={FILENAME}** - You can specify an additional file to output the environment variables. The final path will then be combined between the given source code directory and the specified filename.
+- **--ignoreMissing** - By default, `env-snitch` will print missing environment variables (for which no variable exists inside k8s) as `VARIABLE_NAME=<NOT FOUND>`. If you want to omit those you can use this flag.
 
 ## Is this a good idea?
 

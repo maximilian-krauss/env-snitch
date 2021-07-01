@@ -2,24 +2,33 @@ import { executeShellCommand } from './CommandExecuter'
 import { GetPodResponse } from './k8sInterface'
 import { findAllVariablesIn } from './VariableFinder'
 import { ExecutionOptions } from './ExecutionOptions'
+import { EOL } from 'os'
 
 export default class App {
   private readonly _options: ExecutionOptions
+  private readonly _emptyVariableValue: string = '<NOT FOUND>'
 
   constructor(options: ExecutionOptions) {
     this._options = options
   }
 
   private mergeVariables(variables: Array<string>, environment: string): Array<Record<string, string>> {
-    return environment
-      .split('\n')
-      .map(item => {
-        const [key, ...values] = item.split('=')
+    const environmentVariables: Record<string, string> = environment
+      .split(EOL)
+      .reduce((acc, next) => {
+        const [key, ...values] = next.split('=')
         return {
-          key, value: values.join('=')
+          ...acc,
+          [key]: values.join('=')
         }
-      })
-      .filter(({ key }) => variables.includes(key))
+      }, {})
+
+    return variables
+      .map(variable => ({
+        key: variable,
+        value: environmentVariables[variable] ?? this._emptyVariableValue
+      }))
+      .filter(({ value }) => !this._options.ignoreMissingVariables || value !== this._emptyVariableValue)
   }
 
   private async getPodName(): Promise<string | undefined> {
