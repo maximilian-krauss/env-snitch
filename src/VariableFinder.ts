@@ -38,7 +38,7 @@ export async function findAllVariablesIn(directory: string): Promise<Array<strin
   const result = await Promise.all(files.map(file => findVariablesInFile(file)))
   const variables = [...new Set(result
     .flat()
-    .map(item => item.replace('env.', ''))
+    .map(item => item.replace(/env./i, ''))
   )]
 
   return variables
