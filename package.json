@@ -7,7 +7,7 @@
     "start": "ts-node ./src/index.ts",
     "test": "echo 'none yet, really'",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf ./dist && tsc -p tsconfig.json",
     "clean": "rm -rf dist build",
     "ts-node": "ts-node",
     "semantic-release": "semantic-release"

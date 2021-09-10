@@ -19,6 +19,7 @@ Alongside the required directory as first argument you can pass the following pa
 - **--appName** - Specifies the name of the application as it is labelled inside the kubernetes cluster. If not provided, env-snitch tries to use the `name` specified inside the `package.json`.
 - **--file={FILENAME}** - You can specify an additional file to output the environment variables. The final path will then be combined between the given source code directory and the specified filename.
 - **--ignoreMissing** - By default, `env-snitch` will print missing environment variables (for which no variable exists inside k8s) as `VARIABLE_NAME=<NOT FOUND>`. If you want to omit those you can use this flag.
+- **--objectName** - This is the object name which holds the environment data. By default it's `env` as in `process.env` but you can override with this flag if your configuration data is stored in an different object.
 
 ## Is this a good idea?
 

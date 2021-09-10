@@ -39,7 +39,7 @@ export default class App {
   }
 
   async execute(): Promise<void> {
-    const variables = await findAllVariablesIn(this._options.directory)
+    const variables = await findAllVariablesIn(this._options.directory, this._options.objectName)
     if (variables.length === 0) {
       throw new Error('Did not find any usage of environment variables inside the given directory')
     }
