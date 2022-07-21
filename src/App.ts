@@ -32,7 +32,7 @@ export default class App {
   }
 
   private async getPodName(): Promise<string | undefined> {
-    const podsResponse = await executeShellCommand(`kubectl get pods --selector=app=${this._options.applicationName} -o json`)
+    const podsResponse = await executeShellCommand(`kubectl get pods --selector="app.kubernetes.io/name=${this._options.applicationName}" -o json`)
     const pods = JSON.parse(podsResponse) as GetPodResponse
     const podName = pods?.items[0]?.metadata?.name
     return podName
